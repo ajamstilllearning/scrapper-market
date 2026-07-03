@@ -27,11 +27,20 @@ def scrap_bisnis_market():
     with open(filename, "a", encoding="utf-8") as f:
         f.write(f"\nData diambil pada: {now.strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write("berita terbaru(range 24 jam):\n")
-        for i in block_new:
-            f.write(f"-{i.text.strip()}\n")
-            f.write("real-time = "+now.strftime('%H:%M:%S') + "\n")
-            f.write(f"-{block_new_date[block_new.index(i)].text.strip()}\n")
-            f.write("=========================================================================================\n")
+        for index, i in enumerate(block_new):
+            try:
+                f.write(f"- {i.text.strip()}\n")
+                f.write(f"  real-time = {now.strftime('%H:%M:%S')}\n")
+                    
+                    # Validasi: Pastikan tanggal di indeks ini memang ada
+                if index < len(block_new_date):
+                    f.write(f"- {block_new_date[index].text.strip()}\n")
+                else:
+                        f.write("- Tanggal tidak ditemukan\n") # Solusi jika artDate absen
+                    
+                f.write("=========================================================\n")
+            except Exception as e:
+                print(f"Error pada data ke-{index}: {e}")
         f.write("populer:\n")
         for i in block2:
             f.write(f"-{i.text.strip()}\n")
@@ -41,6 +50,6 @@ def scrap_bisnis_market():
             
     print("Done")
     print(filename)
-    
+
 if __name__ == "__main__":
     scrap_bisnis_market()
