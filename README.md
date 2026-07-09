@@ -13,6 +13,7 @@ market.bisnis.com — berita pasar keuangan & saham
 .
 ├── cryptowave_scraper.py   # Scraper untuk cryptowave.co.id
 ├── market_scrap.py         # Scraper untuk market.bisnis.com
+|──jack.py                  # scraper untuk idx.co.id/id
 └── README.md
 
 
@@ -23,7 +24,7 @@ bashpip install requests beautifulsoup4
 Python 3.10+ direkomendasikan (menggunakan type hint modern seperti X | Y).
 
 
-🚀 Cara Penggunaan
+🚀 Deskripsi tambahan
 
 1. cryptowave_scraper.py
 
@@ -116,6 +117,23 @@ Kedua scraper menggunakan User-Agent browser agar tidak diblokir.
 cryptowave_scraper.py memiliki delay antar request untuk menghindari rate-limit.
 market_scrap.py dirancang untuk dijalankan berkala (misal via cron atau Task Scheduler).
 Pastikan koneksi internet stabil saat menjalankan scraper.
+
+3. jack.py
+
+### 📂 Penjelasan Struktur dan Output File
+
+Seluruh data hasil ekstraksi akan otomatis disimpan dan diorganisir ke dalam folder `./idx_data/` dengan rincian sebagai berikut:
+
+* **`idx_data/json/stock_summary_YYYYMMDD.json`**
+  Berkas data mentah (*raw data*) hasil *scraping* ringkasan perdagangan saham harian yang dipisahkan per tanggal (format: TahunBulanHari).
+* **`idx_data/json/index_summary_YYYYMMDD.json`**
+  Berkas data mentah (*raw data*) ringkasan pergerakan indeks bursa harian yang dipisahkan per tanggal.
+* **`idx_data/idx_data_combined.json`**
+  Satu berkas JSON utama yang menggabungkan seluruh data kompilasi dari semua tanggal yang berhasil diambil (hari ini + 3 hari sebelumnya).
+* **`idx_data/stock_summary_combined.csv`**
+  Data gabungan ringkasan saham seluruh tanggal yang sudah dikonversi ke format tabular (CSV) agar mudah dianalisis menggunakan Excel, Google Sheets, atau Pandas.
+* **`idx_data/index_summary_combined.csv`**
+  Data gabungan ringkasan indeks seluruh tanggal yang sudah dikonversi ke format tabular (CSV) siap pakai.
 
 
 
